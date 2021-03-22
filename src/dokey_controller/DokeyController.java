@@ -1,6 +1,8 @@
 // 흠 ..
 
 // 자 수정 해봅시다 9시 54분요
+
+// 도키컨트롤러 마스터 아닌 상욱브랜치에서 수정
 package dokey_controller;
 
 import java.io.IOException;
