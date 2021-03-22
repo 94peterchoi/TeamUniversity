@@ -1,0 +1,58 @@
+	// 스토어 목록에 게임 추가
+	@Override
+	public int insertGame(GameVO vo) {
+		
+		int insertCnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "INSERT INTO gameinfo(num, code, genre, title, publisher, price, price2,"  
+						+ " trailer, thumbnail1, thumbnail2, thumbnail3, thumbnail4, gamelogo,"
+						+ " description, developer, rate, platform)"
+						+ " VALUES(game_seq.nextval, ?, ?, ?, ?, ?, ?,"
+						+ " ?, ?, ?, ?, ?, ?,"
+						+ " ?, ?, ?, ?)";
+			
+			// 출시일하고 디스카운티드 고민 좀 해야됨
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getCode());
+			pstmt.setString(2, vo.getGenre());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getPublisher());
+			pstmt.setInt(5, vo.getPrice());
+			pstmt.setInt(6, vo.getPrice2());
+			
+			pstmt.setString(7, vo.getTrailer());
+			pstmt.setString(8, vo.getThumbnail1());
+			pstmt.setString(9, vo.getThumbnail2());
+			pstmt.setString(10, vo.getThumbnail3());
+			pstmt.setString(11, vo.getThumbnail4());
+			pstmt.setString(12, vo.getGamelogo());
+			
+			pstmt.setString(13, vo.getDescription());
+			pstmt.setString(14, vo.getDeveloper());
+			pstmt.setString(15, vo.getRate());
+			pstmt.setString(16, vo.getPlatform());
+			
+			insertCnt = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return insertCnt;
+	}
